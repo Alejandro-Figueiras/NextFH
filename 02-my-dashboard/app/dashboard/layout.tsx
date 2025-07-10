@@ -6,10 +6,10 @@ export default function DashboardLayout({
 	children: React.ReactNode
 }) {
 	return (
-		<div className='bg-slate-100 w-screen h-screen antialiased'>
-			<div className='flex flex-row w-screen'>
+		<div className='bg-slate-100 antialiased'>
+			<div className='flex flex-row'>
 				<Sidebar />
-        <div className="w-full overflow-y-scroll p-4">
+        <div className="w-full p-4">
           {children}
         </div>
 			</div>
