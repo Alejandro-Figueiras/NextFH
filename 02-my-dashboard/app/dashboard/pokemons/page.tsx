@@ -2,6 +2,11 @@ import PokemonGrid from "@/pokemons/components/PokemonGrid"
 import { PokemonsResponse } from "@/pokemons/interfaces/pokemons-response"
 import { SimplePokemon } from "@/pokemons/interfaces/simple-pokemon"
 
+export const metadata = {
+	title: 'Lista de Pokémon',
+	description: 'Lista de todos los pokemons de la primera generación'
+}
+
 const getPokemons = async (
 	limit = 20,
 	offset = 0

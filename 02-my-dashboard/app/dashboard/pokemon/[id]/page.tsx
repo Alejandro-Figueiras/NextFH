@@ -2,6 +2,7 @@ import { Pokemon } from "@/pokemons/interfaces/pokemon"
 import { Metadata } from "next"
 import Image from "next/image"
 import { notFound } from "next/navigation"
+import { PokemonsResponse } from "@/pokemons/interfaces/pokemons-response"
 
 interface Props {
 	params: Promise<{
@@ -10,9 +11,19 @@ interface Props {
 }
 
 //! Solo se va a ejecutar en buildtime
-export const generateStaticParams = async() => {
-	const static151Pokemons = Array.from({length: 151}).map((v,i) => i+1)
-	return static151Pokemons.map(id => ({id: `${id}`}))
+export const generateStaticParams = async () => {
+	const data: PokemonsResponse = await fetch(
+		`https://pokeapi.co/api/v2/pokemon?limit=151`
+	).then((res) => res.json())
+
+	const pokemons = data.results.map((pokemon) => ({
+		id: pokemon.url.split("/").at(-2)!,
+		name: pokemon.name,
+	}))
+
+	const static151Pokemons = Array.from({ length: 151 }).map((_, i) => `${i + 1}`).concat(...pokemons.map((p) => p.name ))
+	return static151Pokemons
+		.map((id) => ({ id: `${id}` }))
 }
 
 const getPokemon = async (id: string) => {
@@ -37,7 +48,6 @@ export const generateMetadata = async ({ params }: Props) => {
 			title: `#${id}: ${name}`,
 			description: `Página del pokémon ${name}`,
 		} as Metadata
-    
 	} catch (e) {
 		console.log(e)
 		notFound()
