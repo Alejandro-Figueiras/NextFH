@@ -1,6 +1,7 @@
 import { Pokemon } from "@/pokemons/interfaces/pokemon"
 import { Metadata } from "next"
 import Image from "next/image"
+import { notFound } from "next/navigation"
 
 interface Props {
 	params: Promise<{
@@ -23,13 +24,19 @@ const getPokemon = async (id: string) => {
 }
 
 export const generateMetadata = async ({ params }: Props) => {
-	const paramsProps = await params
-	const { id, name } = await getPokemon(paramsProps.id)
+	try {
+		const paramsProps = await params
+		const { id, name } = await getPokemon(paramsProps.id)
 
-	return {
-		title: `#${id}: ${name}`,
-		description: `Página del pokémon ${name}`,
-	} as Metadata
+		return {
+			title: `#${id}: ${name}`,
+			description: `Página del pokémon ${name}`,
+		} as Metadata
+    
+	} catch (e) {
+		console.log(e)
+		notFound()
+	}
 }
 
 export default async function PokemonPage({ params }: Props) {
