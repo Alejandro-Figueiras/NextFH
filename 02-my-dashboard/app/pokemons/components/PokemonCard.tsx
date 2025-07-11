@@ -20,14 +20,15 @@ const PokemonCard = ({ pokemon }: Props) => {
 						width={100}
 						height={100}
 						alt='nombre'
+						priority={false}
 					/>
 					<p className='pt-2 text-lg font-semibold text-gray-50 capitalize'>
 						{name}
 					</p>
 					<div className='mt-5'>
-						<a className='border rounded-full py-2 px-4 text-xs font-semibold text-gray-100'>
+						<Link href={`/pokemons/${id}`} className='border rounded-full py-2 px-4 text-xs font-semibold text-gray-100'>
 							Más información
-						</a>
+						</Link>
 					</div>
 				</div>
 				<div>
