@@ -9,6 +9,12 @@ interface Props {
 	}>
 }
 
+//! Solo se va a ejecutar en buildtime
+export const generateStaticParams = async() => {
+	const static151Pokemons = Array.from({length: 151}).map((v,i) => i+1)
+	return static151Pokemons.map(id => ({id: `${id}`}))
+}
+
 const getPokemon = async (id: string) => {
 	const pokemon: Pokemon = await fetch(
 		`https://pokeapi.co/api/v2/pokemon/${id}`,
@@ -19,7 +25,6 @@ const getPokemon = async (id: string) => {
 		}
 	).then((r) => r.json())
 
-	console.log(pokemon)
 	return pokemon
 }
 
