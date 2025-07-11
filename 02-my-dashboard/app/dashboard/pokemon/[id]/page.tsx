@@ -15,6 +15,14 @@ const getPokemon = async(id: string) => {
   return pokemon
 }
 
+export const generateMetadata = async({params}: Props) => {
+  const paramsProps = await params;
+  const pokemon = await getPokemon(paramsProps.id)
+
+  return {
+    title: pokemon.name
+  }
+}
 
 export default async function PokemonPage({ params }: Props) {
   const paramsProps = await params;
